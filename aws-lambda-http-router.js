@@ -42,22 +42,6 @@ exports.create =  function (routes) {
     return Promise.resolve(response);
   };
   
-  /*
-  var createCalc = function(i){
-    return function(dt, row){
-        if (typeof (dt.getValue(row,i)) == "number" && evs == 0) { return ""; }
-        else { return dt.getValue(row, i).toString; }
-    };
-  }
-   */ 
-  //Body stringifier callback
-//   const response = (lambdaCallback, response) => {
-//     if ((response.body != null) && (typeof(response.body) != 'string')) {
-//       response.body = JSON.stringify(response.body);
-//     }
-//     lambdaCallback(null, response);
-//     return Promise.resolve(response);
-//   };
   
   //Body stringifier callback
   const wrappedCallback = (lambdaCallback) => {

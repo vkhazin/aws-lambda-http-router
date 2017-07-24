@@ -4,7 +4,52 @@
 
 * Promise based router to facilitate unit testing of lambda handler
 
-## Usage from Mocha Test ##
+## How-to from lambda handler ##
+```
+'use strict';
+/*********************************************************************************
+Dependencies
+**********************************************************************************/
+const promise             = require('bluebird')
+/*********************************************************************************/
+
+/*********************************************************************************/
+//Handlers
+/*********************************************************************************/
+const echoHandler = (event, context, callback) => {
+  const response = {
+    statusCode: 200,
+      body: {
+        message: 'It is alive!'
+      }
+  };
+  callback(null, response);
+  return promise.resolve(response);
+}
+
+/*********************************************************************************/
+//Routes
+/*********************************************************************************/
+const routes = [
+  {
+    method: 'GET',
+    path: '/',
+    handler: echoHandler
+  },
+  {
+    method: 'GET',
+    path: '/echo',
+    handler: echoHandler
+  }
+];
+
+const httpRouter = require('aws-lambda-http-router').create(routes);
+/*********************************************************************************/
+
+exports.handler = httpRouter.handler;
+```
+
+## How-to from Mocha Test ##
 
 ```
 //Handler to process the request
