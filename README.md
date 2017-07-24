@@ -2,7 +2,7 @@
 
 ## Overview ##
 
-* Promised based router to facilitate unit testing of lambda handler
+* Promise based router to facilitate unit testing of lambda handler
 * Does not pre-process or post-process the requests - just matches the the path and the method to handler
 
 ## Usage from Mocha test##
@@ -33,7 +33,7 @@ const routes = [
 ];
       
 //Initiate router with routes
-const httpRouter		    = require('../http-router').create(routes);
+const httpRouter		    = require('aws-lambda-http-router').create(routes);
 
 //Emulated event as passed from API-Gateway to Lambda function
 const echoEvent = {

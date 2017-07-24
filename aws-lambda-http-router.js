@@ -9,17 +9,20 @@ exports.create =  function (routes) {
       return route;
   });
 
+  //Filter routes by method
   const filterByMethod = (routes, method) => {
     const methodLowerCase = method.toLowerCase();
     const filteredRoutes = routes.filter(route => route.method.toLowerCase() === methodLowerCase);
     return filteredRoutes;
   };
 
+  //Filter routes by path
   const filterByPath = (routes, path) => {
     const filteredRoutes = routes.filter(route => route.pathRegExp(path) !== false);
     return filteredRoutes;
   };
   
+  //No rout found response
   const response404 = (event, context, callback) => {
     const response = {
       statusCode: 404,
@@ -29,6 +32,7 @@ exports.create =  function (routes) {
     return Promise.resolve(response);
   };
 
+  //Multiple routes found response
   const responseMultiple = (event, context, callback) => {
     const response = {
       statusCode: 500,
@@ -37,7 +41,43 @@ exports.create =  function (routes) {
     callback(null, response);
     return Promise.resolve(response);
   };
-    
+  
+  /*
+  var createCalc = function(i){
+    return function(dt, row){
+        if (typeof (dt.getValue(row,i)) == "number" && evs == 0) { return ""; }
+        else { return dt.getValue(row, i).toString; }
+    };
+  }
+   */ 
+  //Body stringifier callback
+//   const response = (lambdaCallback, response) => {
+//     if ((response.body != null) && (typeof(response.body) != 'string')) {
+//       response.body = JSON.stringify(response.body);
+//     }
+//     lambdaCallback(null, response);
+//     return Promise.resolve(response);
+//   };
+  
+  //Body stringifier callback
+  const wrappedCallback = (lambdaCallback) => {
+    return function(err, response) {
+      if (err) {
+        lambdaCallback(err, response);
+        return Promise.reject(err);
+      } else {
+        console.log('Lower level function:', response)
+        if ((response.body != null) && (typeof(response.body) != 'string')) {
+          response.body = JSON.stringify(response.body);
+        }
+        lambdaCallback(null, response);
+        return Promise.resolve(response);
+      }
+    };
+  };
+  
+  
+  //Lambda handler
   const handler = (event, context, callback) => {
     const filteredByMethod = filterByMethod(routesWithRegExp, event.httpMethod);
     const filteredByPath = filterByPath(filteredByMethod, event.path);
@@ -47,7 +87,7 @@ exports.create =  function (routes) {
     } else if (filteredByPath.length > 1) {
       return responseMultiple(event, context, callback);
     } else {
-      return filteredByPath[0].handler(event, context, callback);
+      return filteredByPath[0].handler(event, context, wrappedCallback(callback));
     }
   };
   
