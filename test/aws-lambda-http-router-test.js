@@ -162,8 +162,51 @@ describe('aws-lambda-http-router', function() {
       
       httpRouter.handler(echoEvent, lambdaContext, lambdaCallback)
         .then(response => {
-          console.log(response);
           assert.equal(typeof(response.body), 'string', 'Body should be string');
+          done();
+        });
+		});
+  });
+  
+  describe('#GET: /world', function() {
+    
+    it('Extract path parameter', function(done) {
+      const parametersHandler = (event, context, callback) => {
+        const response = {
+          statusCode: 200,
+          body: {
+            pathParameters: event.pathParameters 
+          }
+        }
+        callback(null, response);
+        return Promise.resolve(response);
+      };
+      
+      const routes = [
+        {
+          method: 'GET',
+          path: '/:hello',
+          handler: parametersHandler
+        },
+        {
+          method: 'POST',
+          path: '/',
+          handler: null
+        }
+      ];
+      
+      const httpRouter		    = require('../aws-lambda-http-router').create(routes);
+      const lambdaEvent = {
+        resource: "/",
+        path: "/world",
+        httpMethod: "GET",
+        body: null,
+      };
+      
+      httpRouter.handler(lambdaEvent, lambdaContext, lambdaCallback)
+        .then(response => {
+          const body = JSON.parse(response.body);
+          assert.equal(body.pathParameters.hello, 'world', 'Path parameters extraction has failed');
           done();
         });
 		});

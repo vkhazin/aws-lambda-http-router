@@ -18,7 +18,9 @@ exports.create =  function (routes) {
 
   //Filter routes by path
   const filterByPath = (routes, path) => {
-    const filteredRoutes = routes.filter(route => route.pathRegExp(path) !== false);
+    const filteredRoutes = routes.filter(route => {
+      return route.pathRegExp(path) !== false
+    });
     return filteredRoutes;
   };
   
@@ -50,7 +52,6 @@ exports.create =  function (routes) {
         lambdaCallback(err, response);
         return Promise.reject(err);
       } else {
-        console.log('Lower level function:', response)
         if ((response.body != null) && (typeof(response.body) != 'string')) {
           response.body = JSON.stringify(response.body);
         }
@@ -71,7 +72,9 @@ exports.create =  function (routes) {
     } else if (filteredByPath.length > 1) {
       return responseMultiple(event, context, callback);
     } else {
-      return filteredByPath[0].handler(event, context, wrappedCallback(callback));
+      const route = filteredByPath[0];
+      event.pathParameters = route.pathRegExp(event.path);
+      return route.handler(event, context, wrappedCallback(callback));
     }
   };
   

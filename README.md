@@ -1,8 +1,6 @@
 # aws-lambda-http-router #
 
-## Overview ##
-
-* Promise based router to facilitate unit testing of lambda handler
+Promise based router to facilitate unit testing of lambda handler
 
 ## How-to from lambda handler ##
 ```
