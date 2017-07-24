@@ -26,9 +26,13 @@ exports.create =  function (routes) {
   
   //No rout found response
   const response404 = (event, context, callback) => {
+    const message = `No route found for method: [${event.httpMethod}] and route: [${event.path}]`;
+    const body = {
+      message: message
+    };    
     const response = {
       statusCode: 404,
-      body: `No route found for method: [${event.httpMethod}] and route: [${event.path}]`
+      body: JSON.stringify(body)
     };
     callback(null, response);
     return Promise.resolve(response);
@@ -36,9 +40,13 @@ exports.create =  function (routes) {
 
   //Multiple routes found response
   const responseMultiple = (event, context, callback) => {
+    const message = `Multiple routes found for method: [${event.httpMethod}] and route: [${event.path}]`;
+    const body = {
+      message: message
+    };
     const response = {
       statusCode: 500,
-      body: `Multiple routes found for method: [${event.httpMethod}] and route: [${event.path}]`
+      body: JSON.stringify(body)
     };
     callback(null, response);
     return Promise.resolve(response);
