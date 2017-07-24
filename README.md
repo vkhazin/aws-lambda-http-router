@@ -3,9 +3,8 @@
 ## Overview ##
 
 * Promise based router to facilitate unit testing of lambda handler
-* Does not pre-process or post-process the requests - just matches the the path and the method to handler
 
-## Usage from Mocha test##
+## Usage from Mocha Test ##
 
 ```
 //Handler to process the request

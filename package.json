@@ -2,7 +2,7 @@
   "name": "aws-lambda-http-router",
   "version": "1.0.0",
   "description": "API Gateway Router for Aws Lambda Handler",
-  "main": "http-router.js",
+  "main": "aws-lambda-http-router.js",
   "dependencies": {
     "mocha": "^3.4.2",
     "path-match": "^1.2.4"
