@@ -1,6 +1,6 @@
 {
   "name": "aws-lambda-http-router",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "API Gateway Router for Aws Lambda Handler",
   "main": "aws-lambda-http-router.js",
   "dependencies": {
