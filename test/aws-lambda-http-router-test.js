@@ -166,6 +166,65 @@ describe('aws-lambda-http-router', function() {
           done();
         });
 		});
+		
+		it('Method missmatch: 404', function(done) {
+      
+      const routes = [
+        {
+          method: 'GET',
+          path: '/echo',
+          handler: echoHandler
+        }
+      ];
+      
+      const httpRouter		    = require('../aws-lambda-http-router').create(routes);
+      
+      const echoEvent = {
+        resource: "/",
+        path: "/echo",
+        httpMethod: "PUT",
+        body: null,
+      };
+      
+      httpRouter.handler(echoEvent, lambdaContext, lambdaCallback)
+        .then(response => {
+          assert.equal(response.statusCode, 404, 'Status code should be equal 404');
+          done();
+        });
+		});
+		
+		it('Should return statusCode 200 for RegEx', function(done) {
+      
+      const routes = [
+        {
+          method: 'GET',
+          path: '/$echo',
+          handler: echoHandler
+        },
+        {
+          method: 'GET',
+          path: '\/[^$](.*)',
+          handler: echoHandler
+        }
+      ];
+      
+      const httpRouter		    = require('../aws-lambda-http-router').create(routes);
+
+      const eventData = {
+        resource: "/",
+        path: "/echo",
+        httpMethod: "GET",
+        body: null,
+      };      
+      
+      httpRouter.handler(eventData, lambdaContext, lambdaCallback)
+        .then(response => {
+          assert.equal(response.statusCode, 200, 'Status code should be equal 200');
+          return Promise.reject();
+        })
+        .then(() => done(), done
+        );
+		});
   });
   
   describe('#GET: /world', function() {
