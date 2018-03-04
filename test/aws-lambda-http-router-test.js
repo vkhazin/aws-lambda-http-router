@@ -243,49 +243,49 @@ describe('aws-lambda-http-router', function() {
 		});
   });
   
-//   describe('#GET: /world', function() {
+  describe('#GET: /world', function() {
     
-//     it('Extract path parameter', function(done) {
-//       const parametersHandler = (event, context, callback) => {
-//         const response = {
-//           statusCode: 200,
-//           body: {
-//             pathParameters: event.pathParameters 
-//           }
-//         }
-//         callback(null, response);
-//         return Promise.resolve(response);
-//       };
+    it('Extract path parameter', function(done) {
+      const parametersHandler = (event, context, callback) => {
+        const response = {
+          statusCode: 200,
+          body: {
+            pathParameters: event.pathParameters 
+          }
+        }
+        callback(null, response);
+        return Promise.resolve(response);
+      };
       
-//       const routes = [
-//         {
-//           method: 'GET',
-//           path: '/:hello',
-//           handler: parametersHandler
-//         },
-//         {
-//           method: 'POST',
-//           path: '/',
-//           handler: null
-//         }
-//       ];
+      const routes = [
+        {
+          method: 'GET',
+          path: '/:hello',
+          handler: parametersHandler
+        },
+        {
+          method: 'POST',
+          path: '/',
+          handler: null
+        }
+      ];
       
-//       const httpRouter		    = require('../aws-lambda-http-router').create(routes);
-//       const lambdaEvent = {
-//         resource: "/",
-//         path: "/world",
-//         httpMethod: "GET",
-//         body: null,
-//       };
+      const httpRouter		    = require('../aws-lambda-http-router').create(routes);
+      const lambdaEvent = {
+        resource: "/",
+        path: "/world",
+        httpMethod: "GET",
+        body: null,
+      };
       
-//       httpRouter.handler(lambdaEvent, lambdaContext, lambdaCallback)
-//         .then(response => {
-//           const body = JSON.parse(response.body);
-//           assert.equal(body.pathParameters.hello, 'world', 'Path parameters extraction has failed');
-//           done();
-//         });
-// 		});
+      httpRouter.handler(lambdaEvent, lambdaContext, lambdaCallback)
+        .then(response => {
+          const body = JSON.parse(response.body);
+          assert.equal(body.pathParameters.hello, 'world', 'Path parameters extraction has failed');
+          done();
+        });
+		});
     
-// 	});
+	});
   
 });
