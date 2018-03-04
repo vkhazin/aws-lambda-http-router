@@ -1,6 +1,6 @@
 {
   "name": "aws-lambda-http-router",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "API Gateway Router for Aws Lambda Handler",
   "main": "aws-lambda-http-router.js",
   "dependencies": {
@@ -18,5 +18,9 @@
     "router"
   ],
   "author": "Vlad Khazin <vladimir.khazin@icssolutions.ca>",
-  "license": "ISC"
+  "license": "ISC",
+  "repository": { 
+    "type" : "git",
+    "url" : "https://github.com/vkhazin/aws-lambda-http-router.git"
+  }
 }

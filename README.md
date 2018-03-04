@@ -26,7 +26,7 @@ const echoHandler = (event, context, callback) => {
 }
 
 /*********************************************************************************/
-//Routes
+//Sample Routes
 /*********************************************************************************/
 const routes = [
   {
@@ -47,7 +47,7 @@ const httpRouter = require('aws-lambda-http-router').create(routes);
 exports.handler = httpRouter.handler;
 ```
 
-## How-to from Mocha Test ##
+## How-to from [Mocha Tests](https://github.com/vkhazin/aws-lambda-http-router/blob/master/test/aws-lambda-http-router-test.js)
 
 ```
 //Handler to process the request
@@ -164,4 +164,10 @@ describe('http-router', function() {
 		});
   });
 });
+```
+
+## Publish to npm
+```
+npm login
+npm publish
 ```

@@ -6,7 +6,6 @@ exports.create =  function (routes) {
   //Create collection of RegExps
   const routesWithRegExp = routes.map(route => {
       route.pathRegExp = pathMatch(route.path);
-      console.log(route.pathRegExp);
       return route;
   });
 
